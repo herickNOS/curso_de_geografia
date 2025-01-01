@@ -3,7 +3,7 @@ name: Deploy Curso Folder to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - main  # Ou o branch de sua escolha
 
 jobs:
   deploy:
@@ -12,6 +12,11 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+
+    - name: Verify the repository content
+      run: |
+        echo "Listing the repository content..."
+        ls -la  # Lista os arquivos e pastas do repositório para verificar se 'curso' está lá
 
     - name: Set up Git
       run: |
@@ -26,6 +31,7 @@ jobs:
 
     - name: Deploy to GitHub Pages
       run: |
+        echo "Copying the 'curso' folder content to the root"
         cp -R ./curso/* .  # Copia os arquivos da pasta curso para o root
         git add -A
         git commit -m "Deploy curso folder to GitHub Pages"
