@@ -1,0 +1,40 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on push to the `main` branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Check out the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Git to push to the gh-pages branch
+    - name: Set up Git
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+
+    # Step 3: Create a gh-pages branch (if it doesn't already exist)
+    - name: Create gh-pages branch
+      run: |
+        git checkout --orphan gh-pages || echo "gh-pages branch already exists"
+
+    # Step 4: Copy the content (HTML and image) to the root of the gh-pages branch
+    - name: Copy files to gh-pages branch
+      run: |
+        mkdir -p ./public
+        cp * ./public/
+        cd public
+        git add .
+        git commit -m "Deploy to GitHub Pages"
+
+    # Step 5: Push the changes to the gh-pages branch
+    - name: Push to gh-pages
+      run: |
+        git push origin gh-pages --force
