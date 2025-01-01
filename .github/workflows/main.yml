@@ -1,37 +1,21 @@
-name: Deploy Curso Folder to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # Ou o branch de sua escolha
+      - main  # Quando o código for enviado para o branch 'main'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout do código
+        uses: actions/checkout@v3
 
-    - name: Verify the repository content
-      run: |
-        echo "Listing the repository content..."
-        ls -la  # Lista os arquivos e pastas do repositório para verificar se 'curso' está lá
-
-    - name: Set up Git
-      run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-
-    - name: Create gh-pages branch
-      run: |
-        git checkout --orphan gh-pages  # Cria a branch gh-pages
-        git reset --hard  # Reseta a branch
-        git clean -fdx  # Limpa qualquer resquício de arquivos
-
-    - name: Deploy to GitHub Pages
-      run: |
-        echo "Copying the 'curso' folder content to the root"
-        git add -A
-        git commit -m "Deploy curso folder to GitHub Pages"
-        git push --force origin gh-pages  # Faz o push para a branch gh-pages
+      - name: Deploy para GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages  # A branch onde será feito o deploy
+          folder: curso     # A pasta onde estão os arquivos a serem enviados para o GitHub Pages
+          token: ${{ secrets.GITHUB_TOKEN }}  # Usando o token padrão para autenticação
