@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Quando o código for enviado para o branch 'main'
+      - main  # Quando houver um push para o branch 'main'
 
 jobs:
   deploy:
@@ -16,6 +16,6 @@ jobs:
       - name: Deploy para GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages  # A branch onde será feito o deploy
-          folder: curso     # A pasta onde estão os arquivos a serem enviados para o GitHub Pages
-          token: ${{ secrets.GITHUB_TOKEN }}  # Usando o token padrão para autenticação
+          branch: gh-pages  # A branch de destino
+          folder: curso     # A pasta onde estão os arquivos (pasta 'curso' no seu caso)
+          token: ${{ secrets.GITHUB_TOKEN }}  # Usando o token do GitHub Actions
