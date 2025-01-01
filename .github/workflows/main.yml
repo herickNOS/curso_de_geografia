@@ -32,8 +32,6 @@ jobs:
     - name: Deploy to GitHub Pages
       run: |
         echo "Copying the 'curso' folder content to the root"
-        cp -R ./curso/* ./  # Copia o conteúdo de 'curso' para o diretório atual
-        cp -R ./curso/.* ./  # Copia arquivos ocultos da pasta 'curso' (se existirem)
         git add -A
         git commit -m "Deploy curso folder to GitHub Pages"
         git push --force origin gh-pages  # Faz o push para a branch gh-pages
